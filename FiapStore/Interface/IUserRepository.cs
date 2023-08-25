@@ -1,13 +1,9 @@
-﻿using FiapStore.Entity;
+﻿using FiapStore.Entities;
 
 namespace FiapStore.Interface
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
-        IList<User> GetAllUsers();
-        User GetUserById(int id);
-        void AddUser(User user);
-        void EditUser(User user);
-        void DeleteUser(int id);
+        User GetWithOrders(int id);
     }
 }

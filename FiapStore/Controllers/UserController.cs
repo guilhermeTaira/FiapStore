@@ -1,4 +1,5 @@
-﻿using FiapStore.Entity;
+﻿using FiapStore.DTO;
+using FiapStore.Entities;
 using FiapStore.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,37 +16,43 @@ namespace FiapStore.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet("get-all-users")]
-        public IActionResult GetAllUsers() 
+        [HttpGet("get-user-with-orders-by-id/{id}")]
+        public IActionResult GetUserWithOrdersById(int id)
         {
-            return Ok(_userRepository.GetAllUsers());
+            return Ok(_userRepository.GetWithOrders(id));
+        }
+
+        [HttpGet("get-all-users")]
+        public IActionResult GetAllUsers()
+        {
+            return Ok(_userRepository.GetAll());
         }
 
         [HttpGet("get-user-by-id/{id}")]
         public IActionResult GetUserById(int id)
         {
-            return Ok(_userRepository.GetUserById(id));
+            return Ok(_userRepository.GetById(id));
         }
 
         [HttpPost]
-        public IActionResult AddUser(User user)
+        public IActionResult AddUser(AddUserDTO userDTO)
         {
-            _userRepository.AddUser(user);
-            return Ok("Usuário adicionado com sucesso!");
+            _userRepository.Add(new User(userDTO));
+            return Ok("User added successfully!");
         }
 
         [HttpPut]
-        public IActionResult EditUser(User user)
+        public IActionResult UpdateUser(UpdateUserDTO userDTO)
         {
-            _userRepository.EditUser(user);
-            return Ok("Usuário alterado com sucesso!");
+            _userRepository.Update(new User(userDTO));
+            return Ok("User updated successfully!");
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
-            _userRepository.DeleteUser(id);
-            return Ok("Usuário deletado com sucesso!");
+            _userRepository.Delete(id);
+            return Ok("User deleted successfully!");
         }
     }
 }
