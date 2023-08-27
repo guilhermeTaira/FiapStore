@@ -6,9 +6,9 @@ using static Dapper.SqlMapper;
 
 namespace FiapStore.Interface
 {
-    public class UserRepository : DapperRepository<User>, IUserRepository
+    public class UserRepositoryDapper : DapperRepository<User>, IUserRepository
     {
-        public UserRepository(IConfiguration configuration) : base(configuration)
+        public UserRepositoryDapper(IConfiguration configuration) : base(configuration)
         {
         }
 
