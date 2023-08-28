@@ -10,49 +10,111 @@ namespace FiapStore.Controllers
     public class UserController : ControllerBase
     {
         private IUserRepository _userRepository;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, ILogger<UserController> logger)
         {
             _userRepository = userRepository;
+            _logger = logger;
         }
 
         [HttpGet("get-user-with-orders-by-id/{id}")]
         public IActionResult GetUserWithOrdersById(int id)
         {
-            return Ok(_userRepository.GetWithOrders(id));
+            try
+            {
+                return Ok(_userRepository.GetWithOrders(id));
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex, $"Exception on GetUserWithOrdersById(): {ex.Message}");
+                return BadRequest();
+            }
         }
 
         [HttpGet("get-all-users")]
         public IActionResult GetAllUsers()
         {
-            return Ok(_userRepository.GetAll());
+            try
+            {
+                return Ok(_userRepository.GetAll());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception on GetAllUsers(): {ex.Message}");
+                return BadRequest();
+            }
         }
 
         [HttpGet("get-user-by-id/{id}")]
         public IActionResult GetUserById(int id)
         {
-            return Ok(_userRepository.GetById(id));
+            try
+            {
+                return Ok(_userRepository.GetById(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception on GetUserById(): {ex.Message}");
+                return BadRequest();
+            }
         }
 
         [HttpPost]
         public IActionResult AddUser(AddUserDTO userDTO)
         {
-            _userRepository.Add(new User(userDTO));
-            return Ok("User added successfully!");
+            try
+            {
+                _userRepository.Add(new User(userDTO));
+
+                var message = $"User added successfully! | Name: {userDTO.Name}";
+                _logger.LogInformation(message);
+
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception on AddUser(): {ex.Message}");
+                return BadRequest();
+            } 
         }
 
         [HttpPut]
         public IActionResult UpdateUser(UpdateUserDTO userDTO)
         {
-            _userRepository.Update(new User(userDTO));
-            return Ok("User updated successfully!");
+            try
+            {
+                _userRepository.Update(new User(userDTO));
+
+                var message = $"User updated successfully! | Name: {userDTO.Name}";
+                _logger.LogInformation(message);
+
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception on UpdateUser(): {ex.Message}");
+                return BadRequest();
+            }  
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
-            _userRepository.Delete(id);
-            return Ok("User deleted successfully!");
+            try
+            {
+                _userRepository.Delete(id);
+
+                var message = $"User deleted successfully! | Id: {id}";
+                _logger.LogInformation(message);
+
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception on DeleteUser(): {ex.Message}");
+                return BadRequest();
+            } 
         }
     }
 }
