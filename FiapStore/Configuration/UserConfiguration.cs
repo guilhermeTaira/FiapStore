@@ -18,6 +18,18 @@ namespace FiapStore.Configuration
             builder.Property(u => u.Name)
                 .HasColumnType("VARCHAR(100)");
 
+            builder.Property(u => u.UserName)
+                .HasColumnType("VARCHAR(50)")
+                .IsRequired();
+
+            builder.Property(u => u.Password)
+                .HasColumnType("VARCHAR(50)")
+                .IsRequired();
+
+            builder.Property(u => u.Permission)
+                .HasConversion<int>()
+                .IsRequired();
+
             builder.HasMany(u => u.Orders)
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId)

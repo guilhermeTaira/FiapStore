@@ -1,12 +1,14 @@
 ﻿using FiapStore.DTO;
 using FiapStore.Entities;
+using FiapStore.Enums;
 using FiapStore.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FiapStore.Controllers
 {
     [ApiController]
-    [Route("User")]
+    [Route("user")]
     public class UserController : ControllerBase
     {
         private IUserRepository _userRepository;
@@ -18,6 +20,8 @@ namespace FiapStore.Controllers
             _logger = logger;
         }
 
+        [Authorize]
+        [Authorize(Roles = Permissions.Employee)]
         [HttpGet("get-user-with-orders-by-id/{id}")]
         public IActionResult GetUserWithOrdersById(int id)
         {
@@ -32,6 +36,8 @@ namespace FiapStore.Controllers
             }
         }
 
+        [Authorize]
+        [Authorize(Roles = Permissions.Admin)]
         [HttpGet("get-all-users")]
         public IActionResult GetAllUsers()
         {
@@ -46,6 +52,8 @@ namespace FiapStore.Controllers
             }
         }
 
+        [Authorize]
+        [Authorize(Roles = Permissions.Employee)]
         [HttpGet("get-user-by-id/{id}")]
         public IActionResult GetUserById(int id)
         {
@@ -60,6 +68,8 @@ namespace FiapStore.Controllers
             }
         }
 
+        [Authorize]
+        [Authorize(Roles = $"{Permissions.Employee}, {Permissions.Admin}")]
         [HttpPost]
         public IActionResult AddUser(AddUserDTO userDTO)
         {
@@ -79,6 +89,8 @@ namespace FiapStore.Controllers
             } 
         }
 
+        [Authorize]
+        [Authorize(Roles = Permissions.Admin)]
         [HttpPut]
         public IActionResult UpdateUser(UpdateUserDTO userDTO)
         {
@@ -98,6 +110,8 @@ namespace FiapStore.Controllers
             }  
         }
 
+        [Authorize]
+        [Authorize(Roles = Permissions.Admin)]
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
