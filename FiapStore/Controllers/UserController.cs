@@ -20,6 +20,19 @@ namespace FiapStore.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Returns a user with orders by user Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Example:
+        /// 
+        /// Send Id 1 to the Request
+        /// </remarks>
+        /// <response code = "200">Returns Success</response>
+        /// <response code = "401">Not Authenticated</response>
+        /// <response code = "403">Not Authorized</response>
         [Authorize]
         [Authorize(Roles = Permissions.Employee)]
         [HttpGet("get-user-with-orders-by-id/{id}")]
@@ -36,6 +49,13 @@ namespace FiapStore.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns all users
+        /// </summary>
+        /// <returns></returns>
+        /// <response code = "200">Returns Success</response>
+        /// <response code = "401">Not Authenticated</response>
+        /// <response code = "403">Not Authorized</response>
         [Authorize]
         [Authorize(Roles = Permissions.Admin)]
         [HttpGet("get-all-users")]
@@ -52,6 +72,19 @@ namespace FiapStore.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns a user by user Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Example:
+        /// 
+        /// Send Id 1 to the Request
+        /// </remarks>
+        /// <response code = "200">Returns Success</response>
+        /// <response code = "401">Not Authenticated</response>
+        /// <response code = "403">Not Authorized</response>
         [Authorize]
         [Authorize(Roles = Permissions.Employee)]
         [HttpGet("get-user-by-id/{id}")]
@@ -68,6 +101,13 @@ namespace FiapStore.Controllers
             }
         }
 
+        /// <summary>
+        /// Create a new user
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <response code = "200">Returns Success</response>
+        /// <response code = "401">Not Authenticated</response>
+        /// <response code = "403">Not Authorized</response>
         [Authorize]
         [Authorize(Roles = $"{Permissions.Employee}, {Permissions.Admin}")]
         [HttpPost]
@@ -89,6 +129,14 @@ namespace FiapStore.Controllers
             } 
         }
 
+        /// <summary>
+        /// Update an existing user
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
+        /// <response code = "200">Returns Success</response>
+        /// <response code = "401">Not Authenticated</response>
+        /// <response code = "403">Not Authorized</response>
         [Authorize]
         [Authorize(Roles = Permissions.Admin)]
         [HttpPut]
@@ -110,6 +158,11 @@ namespace FiapStore.Controllers
             }  
         }
 
+        /// <summary>
+        /// Delete an existing user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         [Authorize(Roles = Permissions.Admin)]
         [HttpDelete("{id}")]

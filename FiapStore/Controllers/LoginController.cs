@@ -18,6 +18,13 @@ namespace FiapStore.Controllers
             _tokenService = tokenService;
         }
 
+        /// <summary>
+        /// Authenticate with UserName and Password
+        /// </summary>
+        /// <param name="loginDTO"></param>
+        /// <returns></returns>
+        /// <response code = "200">Returns Success</response>
+        /// <response code = "400">Bad Request</response>
         [HttpPost]
         public IActionResult Authenticate([FromBody] LoginDTO loginDTO)
         {
